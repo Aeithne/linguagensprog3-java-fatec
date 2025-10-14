@@ -1,6 +1,8 @@
 
 
 import java.io.IOException;
+import java.io.PrintWriter;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -27,7 +29,18 @@ public class MeuPrimeiroServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		response.setContentType("text/html; charset=UTF-8");
+		try(PrintWriter out = response.getWriter()) {
+			out.println("<!DOCTYPE HTML>");
+			out.println("<html>");
+			out.println("<head><title>Meu Primeiro Servlet</title></head>");
+			out.println("<body>");
+			out.println("<h2>Meu Primeiro Servlet</h2>");
+			out.println("<p>Sendo executado em" + request.getContextPath() + "</p>");
+			out.println("<p>ADS - Linguagens Programação 3</p>");
+			out.println("</body>");
+			out.println("</html>");
+		}
 	}
 
 	/**
