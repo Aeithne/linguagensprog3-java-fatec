@@ -35,25 +35,26 @@ public class ServletForm extends HttpServlet {
         try(PrintWriter out = response.getWriter()) {
             out.println("<!DOCTYPE HTML>");
             out.println("<html>");
-            out.println("	<head><title>Meu Primeiro Servlet</title></head>");
+            out.println("	<head><title>Meu Segundo Servlet</title></head>");
             out.println("	<body>");
             out.println("		<h2>Meu Segundo Servlet</h2>");
             out.println("		<p>Sendo executado em " + request.getContextPath() + "</p>");
             out.println("		<p>ADS - Linguagens Programação 3</p>");
-
-            if (nome != null && email != null) {
-                out.println("	<h3>Dados Recebidos:</h3>");
-                out.println("		<p>Nome: " + nome + "</p>");
-                out.println("		<p>E-mail: " + email + "</p>");
-            }
 
             out.println("	<form action=\"/Aula10-Parte2/ServletForm\" method=\"get\">");
             out.println("			<label>Nome:</label><br>	");
             out.println("			<input type=\"text\" id=\"nome\" name=\"nome\"><br>	");
             out.println("			<label>e-mail:</label><br>	");
             out.println("			<input type=\"email\" id=\"email\" name=\"email\"><br><br>");
-            out.println("			<input type=\"submit\" value=\"Submit\">	");
+            out.println("			<input type=\"submit\" value=\"Enviar\">	");
             out.println("		</form>");
+            
+            if (nome != null && email != null) {
+                out.println("	<h3>Dados Recebidos:</h3>");
+                out.println("		<p>Nome: " + nome + "</p>");
+                out.println("		<p>E-mail: " + email + "</p>");
+            }
+            
             out.println("	</body>");
             out.println("</html>");
         }
