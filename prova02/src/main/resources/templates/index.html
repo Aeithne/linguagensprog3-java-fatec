@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Sistema de Gestão de Alunos</title>
+</head>
+<body>
+    <h1>📚 Gestão Acadêmica Fatec</h1>
+    
+    <p>Bem-vindo ao sistema de gestão de alunos e cursos. Selecione uma opção abaixo:</p>
+    
+    <hr>
+    
+    <h2>Navegação</h2>
+    <ul>
+        <li>
+            <a th:href="@{/cursos}">Gerenciar Cursos (Cadastro e Listagem)</a>
+        </li>
+        <li>
+            <a th:href="@{/alunos}">Gerenciar Alunos (Cadastro e Listagem)</a>
+        </li>
+    </ul>
+</body>
+</html>
