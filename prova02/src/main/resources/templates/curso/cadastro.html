@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Cadastro de Curso</title>
+</head>
+<body>
+    <h1>Cadastrar Novo Curso</h1>
+    <form th:action="@{/cursos/novo}" th:object="${curso}" method="post">
+        
+        <div>
+            <label for="nome">Nome:</label>
+            <input type="text" id="nome" th:field="*{nome}">
+            <span th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}" style="color: red;">[Erro: Nome é obrigatório]</span>
+        </div>
+
+        <div>
+            <label for="cargaHoraria">Carga Horária (h):</label>
+            <input type="number" id="cargaHoraria" th:field="*{cargaHoraria}">
+            <span th:if="${#fields.hasErrors('cargaHoraria')}" th:errors="*{cargaHoraria}" style="color: red;">[Erro: Carga Horária inválida]</span>
+        </div>
+
+        <div>
+            <label for="descricao">Descrição:</label>
+            <textarea id="descricao" th:field="*{descricao}"></textarea>
+        </div>
+
+        <button type="submit">Salvar Curso</button>
+    </form>
+    <br>
+    <a th:href="@{/cursos}">Voltar para a Lista</a> | <a th:href="@{/}">Início</a>
+</body>
+</html>
