@@ -6,7 +6,7 @@
 </head>
 <body>
     <h1>Cursos Cadastrados</h1>
-    <a th:href="@{/cursos/novo}">Cadastrar Novo Curso</a>
+    <a th:href="@{/cursos/novo}">📖 Cadastrar Novo Curso</a>
     <br><br>
     
     <table border="1">
@@ -25,15 +25,15 @@
                 <td th:text="${curso.cargaHoraria}"></td>
                 <td th:text="${curso.descricao}"></td>
                 <td>
-                    <a th:href="@{/cursos/excluir/{id}(id=${curso.id})}" 
-                       onclick="return confirm('Tem certeza que deseja excluir este curso?');">
-                       Remover
-                    </a>
+                    <a th:href="@{/cursos/editar/{id}(id=${curso.id})}" class="btn btn-warning">✏️ Editar</a>
+
+                    <a th:href="@{/cursos/remover/{id}(id=${curso.id})}" class="btn btn-danger"
+                       onclick="return confirm('Tem certeza que deseja remover este curso?');">❌ Excluir</a>
                 </td>
             </tr>
         </tbody>
     </table>
     <br>
-    <a th:href="@{/}">Voltar ao Início</a>
+    <a th:href="@{/}">📚 Voltar ao Início</a>
 </body>
 </html>

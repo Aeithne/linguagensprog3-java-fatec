@@ -13,48 +13,57 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PathVariable; 
 
 @Controller
-@RequestMapping("/cursos") // Define a rota base para todas as ações desta classe
+@RequestMapping("/cursos") 
 public class CursoController {
 
-    @Autowired // Injeta a interface Repository para acesso ao banco de dados
+    @Autowired
     private CursoRepository cursoRepository;
 
     // Rota: GET /cursos
-    // Função: Exibe a lista de todos os cursos
     @GetMapping
     public String listar(Model model) {
-        // Envia todos os cursos encontrados no banco para a View (listagem.html)
         model.addAttribute("cursos", cursoRepository.findAll());
         return "curso/listagem"; 
     }
 
-    // Rota: GET /cursos/novo
-    // Função: Exibe o formulário de cadastro (View)
+    // Rota: GET /cursos/novo 
     @GetMapping("/novo")
     public String formularioCadastro(Curso curso) {
-        // 'Curso curso' cria um objeto vazio para ser preenchido pelo formulário (Thymeleaf)
         return "curso/cadastro"; 
     }
 
-    // Rota: POST /cursos/novo
-    // Função: Processa os dados do formulário e salva no banco
-    @PostMapping("/novo")
-    public String salvar(@Valid Curso curso, BindingResult result) {
-        // @Valid: Ativa as validações definidas na entidade Curso (ex: @NotBlank)
-        // BindingResult: Contém os resultados das validações
-        if (result.hasErrors()) {
-            return "curso/cadastro"; // Se houver erro, retorna ao formulário, mostrando as mensagens de erro
-        }
+    // Rota: GET /cursos/editar/{id}
+    @GetMapping("/editar/{id}")
+    public String editar(@PathVariable("id") Long id, Model model) {
+        // 1. Busca o curso no banco de dados pelo ID. O .orElseThrow é uma boa prática
+        Curso curso = cursoRepository.findById(id)
+            .orElseThrow(() -> new IllegalArgumentException("ID do curso inválido:" + id));
+
+        // 2. Adiciona o objeto 'curso' (com dados) ao Model
+        // O Thymeleaf irá preencher o formulário 'curso/cadastro' automaticamente
+        model.addAttribute("curso", curso);
         
-        cursoRepository.save(curso);
-        return "redirect:/cursos"; // Salva o curso e redireciona para a rota de listagem (GET /cursos)
+        return "curso/cadastro"; 
     }
     
-    // Função: Exclui o curso pelo ID
+    // Rota: POST /cursos/novo 
+    @PostMapping("/novo")
+    public String salvar(@Valid Curso curso, BindingResult result) {
+        // ...
+        if (result.hasErrors()) {
+            // Se houver erro, retorna ao formulário, mantendo os dados e erros
+            return "curso/cadastro"; 
+        }
+        
+        // Se o objeto 'curso' tiver ID, o JPA faz um UPDATE. Se não tiver ID, faz um INSERT.
+        cursoRepository.save(curso); 
+        return "redirect:/cursos"; // Redireciona para a listagem
+    }
+    
+    // Rota: GET /cursos/excluir/{id}
     @GetMapping("/excluir/{id}")
     public String excluir(@PathVariable("id") Long id) {
-        // Usa o método deleteById do Spring Data JPA
         cursoRepository.deleteById(id);
-        return "redirect:/cursos"; // Redireciona para a listagem atualizada
+        return "redirect:/cursos";
     }
 }

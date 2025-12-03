@@ -21,25 +21,42 @@ public class AlunoController {
     private AlunoRepository alunoRepository;
 
     @Autowired
-    private CursoRepository cursoRepository; // Injetamos para obter a lista de cursos
+    private CursoRepository cursoRepository; 
 
     // Método auxiliar para carregar dados comuns (cursos)
     private void adicionarCursosAoModel(Model model) {
         model.addAttribute("cursos", cursoRepository.findAll());
     }
 
-    // Rota: GET /alunos/novo
+    // Rota: GET /alunos/novo 
     @GetMapping("/novo")
     public String formularioCadastro(Aluno aluno, Model model) {
         adicionarCursosAoModel(model); // Carrega a lista de cursos para o dropdown
         return "aluno/cadastro"; 
     }
+    
+    // Rota: GET /alunos/editar/{id}
+    @GetMapping("/editar/{id}")
+    public String editar(@PathVariable("id") Long id, Model model) {
+        // 1. Busca o aluno no banco de dados pelo ID
+        Aluno aluno = alunoRepository.findById(id)
+            .orElseThrow(() -> new IllegalArgumentException("ID do aluno inválido:" + id));
 
-    // Rota: POST /alunos/novo
+        // 2. Adiciona o objeto 'aluno' (com dados) ao Model
+        model.addAttribute("aluno", aluno);
+
+        // 3. Recarrega a lista de cursos para o dropdown
+        adicionarCursosAoModel(model);
+        
+        return "aluno/cadastro"; 
+    }
+
+
+    // Rota: POST /alunos/novo 
     @PostMapping("/novo")
     public String salvar(@Valid Aluno aluno, BindingResult result, Model model) {
         if (result.hasErrors()) {
-            adicionarCursosAoModel(model); // Recarrega cursos se houver erro
+            adicionarCursosAoModel(model); 
             return "aluno/cadastro"; 
         }
         alunoRepository.save(aluno);
@@ -54,10 +71,9 @@ public class AlunoController {
     }
     
     // Rota: GET /alunos/excluir/{id}
-    // Função: Exclui o aluno pelo ID
     @GetMapping("/excluir/{id}")
     public String excluir(@PathVariable("id") Long id) {
         alunoRepository.deleteById(id);
-        return "redirect:/alunos"; // Redireciona para a listagem atualizada
+        return "redirect:/alunos"; 
     }
 }

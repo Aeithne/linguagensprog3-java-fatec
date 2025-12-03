@@ -6,7 +6,7 @@
 </head>
 <body>
     <h1>Alunos Cadastrados</h1>
-    <a th:href="@{/alunos/novo}">Cadastrar Novo Aluno</a>
+    <a th:href="@{/alunos/novo}">👨🏻‍🎓 Cadastrar Novo Aluno</a>
     <br><br>
     
     <table border="1">
@@ -27,15 +27,17 @@
                 <td th:text="${aluno.matricula}"></td>
                 <td th:text="${aluno.curso.nome}"></td> 
                 <td>
+                    <a th:href="@{/alunos/editar/{id}(id=${aluno.id})}">✏️ Editar</a> 
+
                     <a th:href="@{/alunos/excluir/{id}(id=${aluno.id})}" 
                        onclick="return confirm('Tem certeza que deseja excluir este aluno?');">
-                       Remover
+                       ❌ Excluir
                     </a>
                 </td>
             </tr>
         </tbody>
     </table>
     <br>
-    <a th:href="@{/}">Voltar ao Início</a>
+    <a th:href="@{/}">📚 Voltar ao Início</a>
 </body>
 </html>

@@ -14,18 +14,18 @@ public class Curso {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "O nome é obrigatório")
+    @NotBlank(message = "O nome do curso é obrigatório")
     private String nome;
 
     @NotNull(message = "A carga horária é obrigatória")
-    private Integer cargaHoraria; // Usamos Integer para permitir validação @NotNull
-
+    private Integer cargaHoraria; 
+    
+    @NotBlank(message = "A descrição é obrigatória")
     private String descricao;
 
     // Construtor vazio (obrigatório para JPA)
     public Curso() {}
 
-    // --- Getters e Setters (Você deve gerar todos no NetBeans) ---
 
     public Long getId() {return id;}
     public void setId(Long id) {this.id = id;}

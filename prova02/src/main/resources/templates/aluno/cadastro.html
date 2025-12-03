@@ -7,7 +7,9 @@
 <body>
     <h1>Cadastrar Novo Aluno</h1>
     <form th:action="@{/alunos/novo}" th:object="${aluno}" method="post">
-        
+    
+        <input type="hidden" th:field="*{id}">
+
         <div>
             <label for="nome">Nome:</label>
             <input type="text" id="nome" th:field="*{nome}">
@@ -37,9 +39,11 @@
             <span th:if="${#fields.hasErrors('curso')}" th:errors="*{curso}" style="color: red;">Erro Curso</span>
         </div>
 
-        <button type="submit">Salvar Aluno</button>
+        <button type="submit" >📝 Salvar Aluno</button>
     </form>
     <br>
-    <a th:href="@{/alunos}">Voltar para a Lista</a> | <a th:href="@{/}">Início</a>
+    <a th:href="@{/alunos}">👨🏻‍🎓 Listagem</a> 
+    <br>
+    <a th:href="@{/}">📚 Início</a>
 </body>
 </html>
